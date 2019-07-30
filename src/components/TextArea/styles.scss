@@ -1,0 +1,12 @@
+.text-area {
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.text-area__tooltip {
+  position: absolute;
+  right: -2rem;
+  top: 50%;
+}

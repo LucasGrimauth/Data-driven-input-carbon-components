@@ -1,0 +1,17 @@
+.radio-group {
+  position: relative;
+  width: 100%;
+}
+
+.radio-group__info {
+  align-items: center;
+  display: flex;
+}
+
+.radio-group__label {
+  font-size: 0.925rem;
+  font-weight: 300;
+  letter-spacing: 0.03125rem;
+  line-height: 1.125rem;
+  margin-right: 0.5rem;
+}
