@@ -6,6 +6,7 @@ const RadioExamples = () => {
 
   const onRadioChange = value => {
     setselectedRadio(value);
+    console.log(value)
   }
 
   return (

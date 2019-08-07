@@ -7,6 +7,7 @@ const ToggleExamples = () => {
 
   const onToggleChange = value => {
     setToggle(value);
+    console.log(value);
   }
 
   const onToggleChange2 = value => {

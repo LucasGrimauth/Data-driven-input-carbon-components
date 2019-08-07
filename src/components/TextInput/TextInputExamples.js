@@ -6,6 +6,7 @@ const TextInputExamples = () => {
 
   const onInputChange = e => {
     setInput(e.target.value)
+    console.log(e.target.value)
   }
 
   return (
@@ -22,6 +23,7 @@ const TextInputExamples = () => {
           placeholder="text input"
           value={input}
           type="text"
+          textInputProps={{ helperText: "helper text" }}
         />
       </div>
       <br/>

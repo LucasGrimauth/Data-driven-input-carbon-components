@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import DynamicFormik from "./components/Formik";
 import CreatableExamples from "./components/Creatable/CreatableExamples";
 import DataDrivenInputExamples from "./components/DataDrivenInput/DataDrivenInputExamples";
 import MultiSelectExamples from "./components/MultiSelect/MultiSelectExamples";
@@ -13,6 +14,7 @@ import "./styles.scss";
 function App() {
   return (
     <div className="App">
+      <DynamicFormik />
       <CreatableExamples />
       <DataDrivenInputExamples />
       <MultiSelectExamples />

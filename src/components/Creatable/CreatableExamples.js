@@ -5,6 +5,7 @@ const CreatableExamples = () => {
   const [items, setItems] = useState([]);
   const onChange = createdItems => {
     setItems(createdItems);
+    console.log(createdItems);
   }
 
   return (
@@ -41,7 +42,7 @@ const CreatableExamples = () => {
       <div style={{ width: "25rem" }}>
         <Creatable
           id="controlled-tooltip-creatable"
-          items={items}
+          values={items}
           labelText="Controlled Creatable"
           placeholder="Create some values in the other creatables"
           onChange={onChange}

@@ -5,15 +5,18 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@overgear/yup-ast": "^1.0.3",
     "carbon-components": "10.4.1",
     "carbon-components-react": "7.4.1",
     "classnames": "^2.2.6",
     "downshift": "^3.2.10",
+    "formik": "^1.5.8",
     "invariant": "^2.2.4",
     "node-sass": "^4.12.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "typescript": "3.3.3"

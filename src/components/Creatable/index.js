@@ -11,7 +11,7 @@ const TextInputComponent = ({
   id,
   invalid,
   invalidText,
-  items,
+  values,
   key,
   labelText,
   keyLabelText,
@@ -34,7 +34,7 @@ const TextInputComponent = ({
   const [input, setInput] = useState("");
   const [createdItems, setCreatedItems] = useState([]);
 
-  const chipItems = items ? items : createdItems; // Externally controlled if items props exists
+  const chipItems = values ? values : createdItems; // Externally controlled if items props exists
 
   const onInputChange = e => {
     setInput(e.target.value);
@@ -145,7 +145,8 @@ const TextInputComponent = ({
 TextInputComponent.defaultProps = {
   buttonClassName: "creatable__button",
   createKeyValuePair: false,
-  tooltipClassName: "creatable__tooltip"
+  tooltipClassName: "creatable__tooltip",
+  type: "text"
 }
 
 export default TextInputComponent;

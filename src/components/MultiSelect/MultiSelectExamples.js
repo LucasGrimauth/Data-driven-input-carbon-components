@@ -7,6 +7,7 @@ const MultiSelectExamples = () => {
 
   const onValueChange = ({ selectedItems }) => {
     setSelectedValues(selectedItems);
+    console.log(selectedItems);
   }
 
   const animals = [

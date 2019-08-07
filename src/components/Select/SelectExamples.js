@@ -6,6 +6,7 @@ const SelectExamples = () => {
 
   const onValueChange = ({ selectedItem }) => {
     setselectedValue(selectedItem);
+    console.log(selectedItem)
   }
 
   const animals = [
@@ -31,7 +32,6 @@ const SelectExamples = () => {
           onChange={onValueChange}
           placeholder="Select an animal"
           shouldFilterItem={({ item, inputValue }) => item.label.includes(inputValue)}
-          value={selectedValue}
         />
       </div>
       <br/>
@@ -48,7 +48,6 @@ const SelectExamples = () => {
           tooltipContent="Tooltip for select"
           tooltipProps={{ direction: "top" }}
           shouldFilterItem={({ item, inputValue }) => item.label.includes(inputValue)}
-          value={selectedValue}
         />
       </div>
     </>

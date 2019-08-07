@@ -6,6 +6,7 @@ const TextAreaExamples = () => {
 
   const onInputChange = e => {
     setInput(e.target.value)
+    console.log(e.target.value)
   }
 
   return (

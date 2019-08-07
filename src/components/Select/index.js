@@ -20,8 +20,7 @@ const SelectComponent = ({
   titleText,
   tooltipClassName,
   tooltipContent,
-  tooltipProps,
-  values
+  tooltipProps
 }) => {
   return (
     <div key={key} className="select">
@@ -39,7 +38,6 @@ const SelectComponent = ({
         placeholder={placeholder}
         titleText={titleText}
         shouldFilterItem={shouldFilterItem}
-        value={values}
         {...comboBoxProps}
       />
       {tooltipContent && (
