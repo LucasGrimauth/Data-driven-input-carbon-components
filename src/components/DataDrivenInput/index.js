@@ -14,7 +14,7 @@ import {
   TEXT_AREA_TYPES,
   TEXT_INPUT_TYPES,
   TOGGLE_TYPES
-} from "./constants";
+} from "../../constants/inputTypes";
 
 const DataDrivenInputComponent = ({
   allProps,

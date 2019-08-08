@@ -3,6 +3,15 @@ import { Formik, Form } from "formik";
 //import * as yup from "yup";
 import { transformAll } from "@overgear/yup-ast";
 import DataDrivenInput from "../DataDrivenInput";
+import {
+  CREATABLE_TYPES, 
+  MULTI_SELECT_TYPES, 
+  RADIO_TYPES, 
+  SELECT_TYPES, 
+  TEXT_AREA_TYPES,
+  TEXT_INPUT_TYPES,
+  TOGGLE_TYPES
+} from "../../constants/inputTypes";
 
 /* //Origingal Signup Schema
 
@@ -27,13 +36,17 @@ const inputs = [
     label: "Label Text",
     value: "",
     type: "text",
-    placeholder: "placeholder"
+    placeholder: "placeholder",
+    required: true,
+    minLength: "2",
+    maxLength: "20"
   },
   {
     key: "inputEmail",
     label: "Label Email",
     value: "",
     type: "email",
+    required: true,
     placeholder: "placeholder"
   },
   {
@@ -41,7 +54,8 @@ const inputs = [
     label: "Label Area",
     value: "",
     type: "textarea",
-    placeholder: "placeholder"
+    placeholder: "placeholder",
+    required: true
   },
   {
     key: "inputToggle",
@@ -93,17 +107,46 @@ const inputs = [
   }
 ]
 
-const yupAST = [
-  ["yup.object"],
-  [
-    "yup.shape",
-    {
-      inputText: [["yup.string"], ["yup.required", "Please enter a text"], ["yup.min", 2, "Minimum 2 characters"]],
-      inputEmail: [["yup.string"], ["yup.required", "Please enter an email"], ["yup.email", "Please enter a valid email"]],
-      inputArea: [["yup.string"], ["yup.required", "Please enter a text"]]
+const yupAST = () => {
+  let yupShape = {}
+
+  inputs.forEach(input => {
+    let yupValidationArray = [];
+    const inputType = input.type;
+
+    if( inputType === TEXT_INPUT_TYPES.TEXT || 
+        inputType === TEXT_INPUT_TYPES.PASSWORD ||
+        inputType === TEXT_INPUT_TYPES.NUMBER ||
+        inputType === TEXT_AREA_TYPES.TEXTAREA ||
+        inputType === RADIO_TYPES.RADIO ) {
+      yupValidationArray.push(["yup.string"]);
+    } else if(inputType === TEXT_INPUT_TYPES.EMAIL) {
+      yupValidationArray.push(["yup.string"], ["yup.email", "Please enter a valid email"]);
+    } else if(inputType === TEXT_INPUT_TYPES.URL) {
+      yupValidationArray.push(["yup.string"], ["yup.url", "Please enter a valid url"]);
+    } else if(inputType === TOGGLE_TYPES.TOGGLE) {
+      yupValidationArray.push(["yup.bool"]);
+    } else if(inputType === SELECT_TYPES.SELECT) {
+      yupValidationArray.push(["yup.object"]);
+    } else if(inputType === MULTI_SELECT_TYPES.MULTI_SELECT || inputType === CREATABLE_TYPES.CREATABLE) {
+      yupValidationArray.push(["yup.array"]);
     }
-  ]
-];
+
+    if(input.required) {
+      yupValidationArray.push(["yup.required", `Please enter a ${input.key}`]);
+    }
+    if(input.minLength) {
+      yupValidationArray.push(["yup.min", input.minLength, `Minimum of ${input.minLength} characters`]);
+    }
+    if(input.maxLength) {
+      yupValidationArray.push(["yup.max", input.maxLength, `Maximum of ${input.maxLength} characters`]);
+    }
+
+    yupShape[input.key] = yupValidationArray;
+  });
+
+  return [["yup.object"],["yup.shape", yupShape]];
+} 
 
 /**
  * Get initial values of each input in array of inputs
@@ -123,80 +166,80 @@ const DynamicFormik = () => (
     <hr/>
     <Formik
       initialValues={initialValues()}
-      validationSchema={transformAll(yupAST)}
+      validationSchema={transformAll(yupAST())}
       onSubmit={values => {
         // same shape as initial values
         console.log(values);
       }}
     >
       {({ 
-          values,
-          touched,
-          errors,
-          isValid,
-          handleBlur,
-          handleChange,
-          setFieldValue 
-        }) => {
-          console.log(errors);
+        values,
+        touched,
+        errors,
+        isValid,
+        handleBlur,
+        handleChange,
+        setFieldValue 
+      }) => {
         return (
-        <Form style={{ display: "flex", flexDirection: "column", width: "25rem" }}>
-          {inputs.map(input => {
-            const key = input.key;
-            const inputValue = values[key];
-            const invalidText = errors[key];
-            const invalid = invalidText && touched[key];
-            return (
-              <DataDrivenInput
-                type={input.type}
-                allProps={{
-                  id: key,
-                  name: key,
-                  key: key,
-                  placeholder: input.placeholder,
-                  value: inputValue,
-                  invalid: invalid,
-                  invalidText: invalidText,
-                  labelText: input.label,
-                  titleText: input.label,
-                  onBlur: handleBlur,
-                  required: !!invalidText
-                }}
-                creatableProps={{ 
-                  onChange: createdItems => setFieldValue(key, createdItems),
-                  values: inputValue
-                }}
-                multiSelectProps={{ 
-                  onChange: ({ selectedItems }) => setFieldValue(key, selectedItems),
-                  initialSelectedItems: inputValue,
-                  items: input.options,
-                  itemToString: input => input.label,
-                  label: input.placeholder
-                }}
-                radioProps={{ 
-                  onChange: value => setFieldValue(key, value),
-                  options: input.options,
-                  orientation: input.orientation,
-                  valueSelected: inputValue
-                }}
-                selectProps={{ 
-                  onChange: ({ selectedItem }) => setFieldValue(key, selectedItem),
-                  initialSelectedItem: inputValue,
-                  items: input.options,
-                  itemToString: input => input.label
-                }}
-                textAreaProps={{ onChange: handleChange }}
-                textInputProps={{ onChange: handleChange, type: input.type }}
-                toggleProps={{ 
-                  onToggle: value => setFieldValue(key, value),
-                  toggled: inputValue
-                }}
-              />
-            )
-          })}
-          <button style={{ marginTop: "1rem" }} disabled={!isValid} type="submit">Submit</button>
-        </Form>
-      )}}
+          <Form style={{ display: "flex", flexDirection: "column", width: "25rem" }}>
+            {inputs.map(input => {
+              const key = input.key;
+              const inputValue = values[key];
+              const invalidText = errors[key];
+              const invalid = invalidText && touched[key];
+              return (
+                <DataDrivenInput
+                  type={input.type}
+                  allProps={{
+                    id: key,
+                    name: key,
+                    key: key,
+                    placeholder: input.placeholder,
+                    value: inputValue,
+                    invalid: invalid,
+                    invalidText: invalidText,
+                    labelText: input.label,
+                    titleText: input.label,
+                    onBlur: handleBlur,
+                    required: !!invalidText
+                  }}
+                  creatableProps={{ 
+                    onChange: createdItems => setFieldValue(key, createdItems),
+                    values: inputValue
+                  }}
+                  multiSelectProps={{ 
+                    onChange: ({ selectedItems }) => setFieldValue(key, selectedItems),
+                    initialSelectedItems: inputValue,
+                    items: input.options,
+                    itemToString: input => input.label,
+                    label: input.placeholder
+                  }}
+                  radioProps={{ 
+                    onChange: value => setFieldValue(key, value),
+                    options: input.options,
+                    orientation: input.orientation,
+                    valueSelected: inputValue
+                  }}
+                  selectProps={{ 
+                    onChange: ({ selectedItem }) => setFieldValue(key, selectedItem),
+                    initialSelectedItem: inputValue,
+                    items: input.options,
+                    itemToString: input => input.label
+                  }}
+                  textAreaProps={{ onChange: handleChange }}
+                  textInputProps={{ onChange: handleChange, type: input.type }}
+                  toggleProps={{ 
+                    onToggle: value => setFieldValue(key, value),
+                    toggled: inputValue
+                  }}
+                />
+              )
+            })}
+            <button style={{ marginTop: "1rem" }} disabled={!isValid} type="submit">Submit</button>
+          </Form>
+        )}
+      }
     </Formik>
   </>
 );
