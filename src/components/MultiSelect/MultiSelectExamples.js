@@ -14,9 +14,16 @@ const MultiSelectExamples = () => {
   const animals = [
     { label: "Caribou", value: "caribou" },
     { label: "Cat", value: "cat" },
+    { label: "Catfish", value: "catfish" },
+    { label: "Cheetah", value: "cheetah" },
+    { label: "Chipmunk", value: "chipmunk" },
     { label: "Dog", value: "dog" },
     { label: "Dolphin", value: "dolphin" }, 
-    { label: "Panda", value: "panda" }
+    { label: "Dove", value: "dove" },
+    { label: "Panda", value: "panda" },
+    { label: "Parrot", value: "parrot" },
+    { label: "Peacock", value: "peacock" },
+    { label: "Penguim", value: "penguim" }
   ]
 
   return (

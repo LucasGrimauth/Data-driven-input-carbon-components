@@ -130,14 +130,6 @@ export default class MultiSelectComboBox extends React.Component {
     );
   };
 
-  handleSelectItem = item => {
-
-  }
-
-  handleRemoveItem = item => {
-    const selectedItems = [ ...this.state.stateSelectedItems ];
-  }
-
   handleOnChange = item => {
     if (this.props.disabled) {
       return;
@@ -171,6 +163,13 @@ export default class MultiSelectComboBox extends React.Component {
       event.preventDownshiftDefault = true;
       event.persist();
     }
+  };
+
+  handleClearSelection = () => {
+    if (this.props.disabled) {
+      return;
+    }
+    this.setState({ stateSelectedItems: [] });
   };
 
   handleOnOuterClick = () => {
@@ -260,28 +259,6 @@ export default class MultiSelectComboBox extends React.Component {
     const wrapperClasses = cx(`${prefix}--list-box__wrapper`);
     const ItemToElement = itemToElement; // Capitalize
 
-    /** Show selected items in tags */
-    const tags = (
-      <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
-        {selectedItems.map((item, index) => {
-          const itemString = itemToString(item);
-          return (
-            <Tag
-              key={`${itemString}-${index}`}
-              disabled={disabled}
-              type="teal"
-              onClick={() => this.handleOnChange(item)}
-              onKeyDown={() => this.handleOnChange(item)}
-              filter
-              {...tagProps}
-            >
-              {itemString}
-            </Tag>
-          )
-        })}
-      </div>
-    )
-
     const input = (
       <Downshift
         {...downshiftProps}
@@ -302,8 +279,7 @@ export default class MultiSelectComboBox extends React.Component {
           isOpen,
           inputValue,
           selectedItem,
-          highlightedIndex,
-          clearSelection,
+          highlightedIndex
         }) => (
           <ListBox
             className={className}
@@ -312,36 +288,57 @@ export default class MultiSelectComboBox extends React.Component {
             invalidText={invalidText}
             isOpen={isOpen}
             light={light}
+            style={{ height: "auto", minHeight: "2.5rem", maxHeight: "10rem", padding: "0.5rem 0" }}
             {...getRootProps({ refKey: 'innerRef' })}>
             <Field
               id={id}
               disabled={disabled}
               translateWithId={translateWithId}
+              style={{ height: "auto", minHeight: "1.875rem" }}
               {...getToggleButtonProps({
                 disabled
               })}>
-              <input
-                className={`${prefix}--text-input`}
-                aria-label={ariaLabel}
-                aria-controls={`${id}__menu`}
-                aria-autocomplete="list"
-                ref={this.textInput}
-                {...rest}
-                {...getInputProps({
-                  disabled,
-                  id,
-                  placeholder,
-                  onKeyDown: this.handleOnInputKeyDown,
+              <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", width: "90%" }}>
+                {selectedItems.map((item, index) => {
+                  const itemString = itemToString(item);
+                  return (
+                    <Tag
+                      key={`${itemString}-${index}`}
+                      disabled={disabled}
+                      type="teal"
+                      onClick={() => this.handleOnChange(item)}
+                      onKeyDown={() => this.handleOnChange(item)}
+                      filter
+                      {...tagProps}
+                    >
+                      {itemString}
+                    </Tag>
+                  )
                 })}
-              />
+                <input
+                  className={`${prefix}--text-input`}
+                  aria-label={ariaLabel}
+                  aria-controls={`${id}__menu`}
+                  aria-autocomplete="list"
+                  ref={this.textInput}
+                  style={{ borderBottom: "none", width: "auto" }}
+                  {...rest}
+                  {...getInputProps({
+                    disabled,
+                    id,
+                    placeholder,
+                    onKeyDown: this.handleOnInputKeyDown,
+                  })}
+                />
+              </div>
               {invalid && (
                 <WarningFilled16
                   className={`${prefix}--list-box__invalid-icon`}
                 />
               )}
-              {inputValue && (
+              {(inputValue || selectedItems.length > 0) && (
                 <Selection
-                  clearSelection={clearSelection}
+                  clearSelection={this.handleClearSelection}
                   translateWithId={translateWithId}
                 />
               )}
@@ -378,7 +375,6 @@ export default class MultiSelectComboBox extends React.Component {
         {title}
         {helper}
         {input}
-        {tags}
       </div>
     );
   }
