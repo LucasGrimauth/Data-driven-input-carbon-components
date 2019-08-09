@@ -14,10 +14,10 @@ import "./styles.scss";
 function App() {
   return (
     <div className="App">
-      <DynamicFormik />
-      <CreatableExamples />
-      <DataDrivenInputExamples />
       <MultiSelectExamples />
+      <CreatableExamples />
+      <DynamicFormik />
+      <DataDrivenInputExamples />
       <RadioExamples />
       <SelectExamples />
       <TextInputExamples />

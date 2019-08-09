@@ -12,6 +12,7 @@ const TextAreaComponent = ({
   onBlur,
   onChange,
   placeholder,
+  style,
   textAreaProps,
   tooltipClassName,
   tooltipContent,
@@ -30,6 +31,7 @@ const TextAreaComponent = ({
         onBlur={onBlur}
         onChange={onChange}
         placeholder={placeholder}
+        style={style}
         type={type}
         value={value}
         {...textAreaProps}

@@ -12,6 +12,7 @@ const TextInputComponent = ({
   onBlur,
   onChange,
   placeholder,
+  style,
   textInputProps,
   tooltipClassName,
   tooltipContent,
@@ -30,6 +31,7 @@ const TextInputComponent = ({
         onBlur={onBlur}
         onChange={onChange}
         placeholder={placeholder}
+        style={style}
         type={type}
         value={value}
         {...textInputProps}

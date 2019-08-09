@@ -5,6 +5,7 @@ import isEqual from 'lodash.isequal';
 export default class Selection extends React.Component {
   static propTypes = {
     initialSelectedItems: PropTypes.array.isRequired,
+    selectedItems: PropTypes.array
   };
 
   static defaultProps = {

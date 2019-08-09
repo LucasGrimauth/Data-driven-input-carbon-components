@@ -21,7 +21,7 @@ const TextAreaExamples = () => {
           labelText="Text Area"
           onChange={onInputChange}
           placeholder="text area"
-          textAreaProps={{ style: { resize: "none" } }}
+          style={{ resize: "none" }}
           type="text"
           value={input}
         />
@@ -36,7 +36,7 @@ const TextAreaExamples = () => {
           placeholder="text area"
           tooltipContent="Tooltip for TextArea"
           tooltipProps={{ direction:"top" }}
-          textAreaProps={{ style: { resize: "none" } }}
+          style={{ resize: "none" }}
           type="text"
           value={input}
         />

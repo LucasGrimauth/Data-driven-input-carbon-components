@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MultiSelect from ".";
 import MultiSelectV2 from "./MultiSelectV2";
+import MultiSelectComboBox from "./MultiSelectComboBox";
 
 const MultiSelectExamples = () => {
   const [selectedValues, setSelectedValues] = useState([{ label: "Cat", value: "cat" }]);
@@ -23,6 +24,19 @@ const MultiSelectExamples = () => {
       <br/>
       <h2>MultiSelect Examples</h2>
       <hr/>
+      <h4>ComboBox MultiSelect</h4>
+      <div style={{ width: "25rem" }}>
+        <MultiSelectComboBox
+          id="combobox-multi-select"
+          initialSelectedItems={selectedValues}
+          items={animals}
+          itemToString={item => item.label}
+          onChange={onValueChange}
+          titleText="Select some animals"
+          placeholder="Select some animals"
+        />
+      </div>
+      <br/>
       <h4>Default MultiSelect</h4>
       <div style={{ width: "25rem" }}>
         <MultiSelect

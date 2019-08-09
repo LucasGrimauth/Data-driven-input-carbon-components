@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextInput, Tooltip } from "carbon-components-react";
-import Chip from "./Chip";
+import { Button, Tag, TextInput, Tooltip } from "carbon-components-react";
 import "./styles.scss";
 
 const TextInputComponent = ({
@@ -11,7 +10,6 @@ const TextInputComponent = ({
   id,
   invalid,
   invalidText,
-  values,
   key,
   labelText,
   keyLabelText,
@@ -23,18 +21,20 @@ const TextInputComponent = ({
   valuePlaceholder,
   onChange,
   placeholder,
+  tagProps,
   textInputProps,
   tooltipClassName,
   tooltipContent,
   tooltipProps,
-  type
+  type,
+  values
 }) => {
   const [keyValue, setKeyValue] = useState("");
   const [value, setValue] = useState("");
   const [input, setInput] = useState("");
   const [createdItems, setCreatedItems] = useState([]);
 
-  const chipItems = values ? values : createdItems; // Externally controlled if items props exists
+  const tagItems = values ? values : createdItems; // Externally controlled if values props exists
 
   const onInputChange = e => {
     setInput(e.target.value);
@@ -49,7 +49,7 @@ const TextInputComponent = ({
   }
 
   const addValue = () => {
-    const items = [ ...chipItems ];
+    const items = [ ...tagItems ];
     if(createKeyValuePair && keyValue && value) {
       items.push(`${keyValue}:${value}`);
       setKeyValue("");
@@ -64,7 +64,7 @@ const TextInputComponent = ({
   }
 
   const removeValue = value => {
-    const items = chipItems.filter(item => item !== value);
+    const items = tagItems.filter(item => item !== value);
     setCreatedItems(items);
     onChange(items);
   }
@@ -126,9 +126,19 @@ const TextInputComponent = ({
           Add
         </Button>
       </div>
-      <div className="creatable__chips">
-        {chipItems.map((item, index) => (
-          <Chip key={`${item}-${index}`} value={item} removeValue={removeValue} />
+      <div className="creatable__tags">
+        {tagItems.map((item, index) => (
+          <Tag
+            key={`${item}-${index}`}
+            disabled={disabled}
+            type="teal"
+            onClick={() => removeValue(item)}
+            onKeyDown={() => removeValue(item)}
+            filter
+            {...tagProps}
+          >
+            {item}
+          </Tag>
         ))}
       </div>
       {tooltipContent && (

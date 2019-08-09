@@ -162,6 +162,7 @@ const initialValues = () => {
 
 const DynamicFormik = () => (
   <>
+    <br/>
     <h2>Formik Example</h2>
     <hr/>
     <Formik
@@ -201,8 +202,7 @@ const DynamicFormik = () => (
                     invalidText: invalidText,
                     labelText: input.label,
                     titleText: input.label,
-                    onBlur: handleBlur,
-                    required: !!invalidText
+                    onBlur: handleBlur
                   }}
                   creatableProps={{ 
                     onChange: createdItems => setFieldValue(key, createdItems),
