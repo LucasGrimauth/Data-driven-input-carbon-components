@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DynamicFormik from "./components/Formik";
+import CheckboxListExamples from "./components/CheckboxList/CheckboxListExamples";
 import CreatableExamples from "./components/Creatable/CreatableExamples";
+import DynamicFormik from "./components/Formik";
 import DataDrivenInputExamples from "./components/DataDrivenInput/DataDrivenInputExamples";
 import MultiSelectExamples from "./components/MultiSelect/MultiSelectExamples";
 import RadioExamples from "./components/Radio/RadioExamples";
@@ -14,6 +15,7 @@ import "./styles.scss";
 function App() {
   return (
     <div className="App">
+      <CheckboxListExamples />
       <MultiSelectExamples />
       <CreatableExamples />
       <DynamicFormik />

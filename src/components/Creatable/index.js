@@ -4,21 +4,22 @@ import "./styles.scss";
 
 const TextInputComponent = ({
   buttonClassName,
+  buttonContent,
   buttonProps,
   createKeyValuePair,
   disabled,
   id,
   invalid,
   invalidText,
+  helperText,
   key,
-  labelText,
+  keyHelperText,
   keyLabelText,
-  valueLabelText,
+  keyPlaceholder,
+  labelText,
   onKeyBlur,
   onValueBlur,
   onInputBlur,
-  keyPlaceholder,
-  valuePlaceholder,
   onChange,
   placeholder,
   tagProps,
@@ -27,6 +28,9 @@ const TextInputComponent = ({
   tooltipContent,
   tooltipProps,
   type,
+  valueHelperText,
+  valueLabelText,
+  valuePlaceholder,
   values
 }) => {
   const [keyValue, setKeyValue] = useState("");
@@ -60,13 +64,17 @@ const TextInputComponent = ({
     }
 
     setCreatedItems(items);
-    onChange(items);
+    if(typeof onChange === "function") {
+      onChange(items);
+    }
   }
 
   const removeValue = value => {
     const items = tagItems.filter(item => item !== value);
     setCreatedItems(items);
-    onChange(items);
+    if(typeof onChange === "function") {
+      onChange(items);
+    }
   }
 
   return (
@@ -79,6 +87,7 @@ const TextInputComponent = ({
               id={`${id}-key`}
               invalid={invalid}
               invalidText={invalidText}
+              helperText={keyHelperText}
               labelText={keyLabelText}
               onBlur={onKeyBlur}
               onChange={onKeyChange}
@@ -93,6 +102,7 @@ const TextInputComponent = ({
               id={`${id}-value`}
               invalid={invalid}
               invalidText={invalidText}
+              helperText={valueHelperText}
               labelText={valueLabelText}
               onBlur={onValueBlur}
               onChange={onValueChange}
@@ -108,6 +118,7 @@ const TextInputComponent = ({
             id={id}
             invalid={invalid}
             invalidText={invalidText}
+            helperText={helperText}
             labelText={labelText}
             onBlur={onInputBlur}
             onChange={onInputChange}
@@ -123,7 +134,7 @@ const TextInputComponent = ({
           onClick={addValue} 
           {...buttonProps}
         >
-          Add
+          {buttonContent}
         </Button>
       </div>
       <div className="creatable__tags">
@@ -154,6 +165,7 @@ const TextInputComponent = ({
 
 TextInputComponent.defaultProps = {
   buttonClassName: "creatable__button",
+  buttonContent: "Add",
   createKeyValuePair: false,
   tooltipClassName: "creatable__tooltip",
   type: "text"

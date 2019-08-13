@@ -8,6 +8,7 @@ const TextAreaComponent = ({
   invalid,
   invalidText,
   key,
+  helperText,
   labelText,
   onBlur,
   onChange,
@@ -27,6 +28,7 @@ const TextAreaComponent = ({
         id={id}
         invalid={invalid}
         invalidText={invalidText}
+        helperText={helperText}
         labelText={labelText}
         onBlur={onBlur}
         onChange={onChange}

@@ -170,6 +170,10 @@ export default class MultiSelectComboBox extends React.Component {
       return;
     }
     this.setState({ stateSelectedItems: [] });
+
+    if(typeof this.props.onChange === "function") {
+      this.props.onChange({ selectedItems: [] });
+    }
   };
 
   handleOnOuterClick = () => {

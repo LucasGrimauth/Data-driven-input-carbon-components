@@ -1,0 +1,23 @@
+.checkbox-list {
+  position: relative;
+  width: 100%;
+}
+
+.checkbox-list__info {
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.checkbox-list__label {
+  font-size: 0.925rem;
+  font-weight: 300;
+  letter-spacing: 0.03125rem;
+  line-height: 1.125rem;
+  margin-right: 0.5rem;
+}
+
+.checkbox-list__list {
+  display: flex;
+  flex-direction: column;
+}
