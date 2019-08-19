@@ -54,6 +54,7 @@ const CheckboxListComponent = ({
           const checked = selectedItems.some(item => item === option.id);
           return (
             <Checkbox
+              key={option.id}
               disabled={disabled}
               id={option.id}
               labelText={option.label}

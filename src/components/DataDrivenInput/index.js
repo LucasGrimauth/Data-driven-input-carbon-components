@@ -6,7 +6,9 @@ import Radio from "../Radio";
 import Select from "../Select";
 import MultiSelect from "../MultiSelect";
 import Creatable from "../Creatable";
+import CheckboxList from "../CheckboxList";
 import {
+  CHECKBOX_TYPES,
   CREATABLE_TYPES, 
   MULTI_SELECT_TYPES, 
   RADIO_TYPES, 
@@ -18,6 +20,7 @@ import {
 
 const DataDrivenInputComponent = ({
   allProps,
+  checkboxProps,
   creatableProps,
   multiSelectProps,
   radioProps,
@@ -27,7 +30,9 @@ const DataDrivenInputComponent = ({
   toggleProps,
   type
 }) => {
-  if(Object.values(CREATABLE_TYPES).includes(type)) {
+  if(Object.values(CHECKBOX_TYPES).includes(type)) {
+    return <CheckboxList {...allProps} {...checkboxProps} />;
+  } else if(Object.values(CREATABLE_TYPES).includes(type)) {
     return <Creatable {...allProps} {...creatableProps} />;
   } else if(Object.values(MULTI_SELECT_TYPES).includes(type)) {
     return <MultiSelect {...allProps} {...multiSelectProps} />;

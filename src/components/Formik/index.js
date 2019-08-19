@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import { transformAll } from "@overgear/yup-ast";
 import DataDrivenInput from "../DataDrivenInput";
 import {
+  CHECKBOX_TYPES,
   CREATABLE_TYPES, 
   MULTI_SELECT_TYPES, 
   RADIO_TYPES, 
@@ -34,7 +35,7 @@ const inputs = [
   {
     key: "inputText",
     label: "Label Text",
-    value: "",
+    value: "something",
     type: "text",
     placeholder: "placeholder",
     required: true,
@@ -44,7 +45,7 @@ const inputs = [
   {
     key: "inputEmail",
     label: "Label Email",
-    value: "",
+    value: "example@email.com",
     type: "email",
     required: true,
     placeholder: "placeholder"
@@ -104,6 +105,17 @@ const inputs = [
     type: "creatable",
     values: ["one"],
     placeholder: "placeholder"
+  },
+  {
+    key: "inputCheckboxList",
+    label: "Label Checkbox",
+    type: "checkbox",
+    values: ["one", "two"],
+    options: [
+      { label: "One", id: "one" },
+      { label: "Two", id: "two" },
+      { label: "Three", id: "three" }
+    ]
   }
 ]
 
@@ -128,7 +140,7 @@ const yupAST = () => {
       yupValidationArray.push(["yup.bool"]);
     } else if(inputType === SELECT_TYPES.SELECT) {
       yupValidationArray.push(["yup.object"]);
-    } else if(inputType === MULTI_SELECT_TYPES.MULTI_SELECT || inputType === CREATABLE_TYPES.CREATABLE) {
+    } else if(inputType === MULTI_SELECT_TYPES.MULTI_SELECT || inputType === CREATABLE_TYPES.CREATABLE || inputType === CHECKBOX_TYPES.CHECKBOX) {
       yupValidationArray.push(["yup.array"]);
     }
 
@@ -203,6 +215,11 @@ const DynamicFormik = () => (
                     labelText: input.label,
                     titleText: input.label,
                     onBlur: handleBlur
+                  }}
+                  checkboxProps={{
+                    onChange: (value, id, event, selectedItems) => setFieldValue(key, selectedItems),
+                    initialSelectedItems: inputValue,
+                    options: input.options
                   }}
                   creatableProps={{ 
                     onChange: createdItems => setFieldValue(key, createdItems),

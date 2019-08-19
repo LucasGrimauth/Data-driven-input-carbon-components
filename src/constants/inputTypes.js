@@ -29,3 +29,7 @@ export const MULTI_SELECT_TYPES = {
 export const CREATABLE_TYPES = {
   CREATABLE: "creatable"
 };
+
+export const CHECKBOX_TYPES = {
+  CHECKBOX: "checkbox"
+};
